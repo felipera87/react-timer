@@ -24,7 +24,7 @@ const newCycleFormValidationSchema = zod.object({
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home() {
-  const { register, handleSubmit, watch } = useForm<NewCycleFormData>({
+  const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     // errors from validation resolvers are available in formState, which is extracted from useForm hook
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
@@ -35,6 +35,8 @@ export function Home() {
 
   function handleCreateNewCycle(data: NewCycleFormData) {
     console.log(data)
+
+    reset()
   }
 
   const task = watch('task')
@@ -81,7 +83,7 @@ export function Home() {
           <span>0</span>
         </CountdownContainer>
 
-        <StartCountdownButton disabled={!isSubmitDisabled} type="submit">
+        <StartCountdownButton disabled={isSubmitDisabled} type="submit">
           <Play size={24} />
           Start
         </StartCountdownButton>
